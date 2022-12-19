@@ -2,6 +2,14 @@ html, body {
   margin: 0;
   padding: 0;
 }
+div {
+  margin: 1%
+}
 canvas {
   display: block;
+  margin: 2%;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 2px;
+  border-style: dashed;
 }

@@ -19,33 +19,42 @@ var selected = {
   index: -1     // Índice na lista de Volumes / Grupos
 }
 // Cor normal
-var COLOR_DEFAULT = 'rgba(255, 0, 0, 0.5)'
+var COLOR_DEFAULT = 'rgba(50, 205, 50, 0.5)'
 // Cor em caso de interseção
-var COLOR_OVERLAP = 'rgba(50, 205, 50, 0.5)'
-
+var COLOR_OVERLAP = 'rgba(255, 0, 0, 0.5)'
+const pointSize = 3
 function setup() {
   cursor('arrow')
-  createCanvas(500, 500)
+  let canvas = createCanvas(500, 500)
   // Adicionar pontos
-  btnAdd = createButton('Adicionar Pontos')
+  btnAdd = Button('Adicionar Pontos')
   btnAdd.mousePressed(() => {
     state = STATE.ADD_POINTS
   })
   // Criar Volume
-  btnCreate = createButton('Criar')
+  btnCreate = Button('Criar AABB')
   btnCreate.mousePressed(() => {
+    if (pointsGroup[groupIndex].length === 0) return
     let v = new AABB()
     v.fit(pointsGroup[groupIndex])
     volumeList.push(v)
     pointsGroup[++groupIndex] = []
   })
+  btnCreate3 = Button('Criar O')
+  btnCreate3.mousePressed(() => {
+    if (pointsGroup[groupIndex].length === 0) return
+    let v = new Circle()
+    v.fit(pointsGroup[groupIndex])
+    volumeList.push(v)
+    pointsGroup[++groupIndex] = []
+    print('teste')
+  })
   // Mover
-  btnMove = createButton('Mover')
+  btnMove = Button('Mover')
   btnMove.mousePressed(() => {
     state = STATE.SELECT_VOLUME
     selectedVolume = null
   })
-
 }
 
 function draw() {
@@ -54,7 +63,11 @@ function draw() {
 
   let type = ARROW
   let mousePoint = new vec2(mouseXC, mouseYC)
-
+  if (state == STATE.ADD_POINTS) {
+    colore('grey')
+    circle(mousePoint.x, mousePoint.y, pointSize)
+    colore('black')
+  }
   if (state === STATE.MOVING_VOLUME) {
     if (selected.volume != null) {
       let mouseMove = mousePoint.sub(mouseOrigin)
@@ -71,7 +84,7 @@ function draw() {
   // Desenhar os pontos de cada grupo de pontos
   pointsGroup.forEach(
     group => group.forEach(
-      p => circle(p.x, p.y, 5)
+      p => circle(p.x, p.y, pointSize)
     )
   )
 
