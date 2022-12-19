@@ -23,9 +23,15 @@ var COLOR_DEFAULT = "rgba(50, 205, 50, 0.5)";
 // Cor em caso de interseção
 var COLOR_OVERLAP = "rgba(255, 0, 0, 0.5)";
 const pointSize = 3;
+function createVolume(v) {
+  if (pointsGroup[groupIndex].length === 0) return;
+  v.fit(pointsGroup[groupIndex]);
+  volumeList.push(v);
+  pointsGroup[++groupIndex] = [];
+}
 function setup() {
   cursor("arrow");
-  let canvas = createCanvas(500, 500);
+  createCanvas(500, 500);
   // Adicionar pontos
   btnAdd = Button("Adicionar Pontos");
   btnAdd.mousePressed(() => {
@@ -34,28 +40,15 @@ function setup() {
   // Criar Volume
   btnCreate = Button("Criar AABB");
   btnCreate.mousePressed(() => {
-    if (pointsGroup[groupIndex].length === 0) return;
-    let v = new AABB();
-    v.fit(pointsGroup[groupIndex]);
-    volumeList.push(v);
-    pointsGroup[++groupIndex] = [];
+    createVolume(new AABB());
   });
   btnCreate2 = Button("Criar OBB");
   btnCreate2.mousePressed(() => {
-    if (pointsGroup[groupIndex].length === 0) return;
-    let v = new OBB();
-    v.fit(pointsGroup[groupIndex]);
-    volumeList.push(v);
-    pointsGroup[++groupIndex] = [];
-    print(volumeList);
+    createVolume(new OBB());
   });
   btnCreate3 = Button("Criar O");
   btnCreate3.mousePressed(() => {
-    if (pointsGroup[groupIndex].length === 0) return;
-    let v = new Circle();
-    v.fit(pointsGroup[groupIndex]);
-    volumeList.push(v);
-    pointsGroup[++groupIndex] = [];
+    createVolume(new Circle());
   });
   // Mover
   btnMove = Button("Mover");
