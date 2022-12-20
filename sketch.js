@@ -10,7 +10,8 @@ const STATE = {
 };
 let state = STATE.ADD_POINTS;
 // Botões
-var btnAdd, btnCreate, btnMove;
+var btnAdd, btnCreate, btnMove, chk;
+var label;
 var volumeList = [];
 var selected = {
   volume: null, // Instância do volume
@@ -36,6 +37,7 @@ function setup() {
   btnAdd = Button("Adicionar Pontos");
   btnAdd.mousePressed(() => {
     state = STATE.ADD_POINTS;
+    label.html("Clique na tela para inserir pontos.");
   });
   // Criar Volume
   btnCreate = Button("Criar AABB");
@@ -55,7 +57,10 @@ function setup() {
   btnMove.mousePressed(() => {
     state = STATE.SELECT_VOLUME;
     selectedVolume = null;
+    label.html("Clique e arraste o volume envoltório desejado.");
   });
+  label = Label("Clique na tela para inserir pontos.");
+  chk = Checkbox("Esconder nuvem de pontos.");
 }
 
 function draw() {
@@ -83,9 +88,11 @@ function draw() {
   }
 
   // Desenhar os pontos de cada grupo de pontos
-  pointsGroup.forEach((group) =>
-    group.forEach((p) => circle(p.x, p.y, pointSize))
-  );
+  pointsGroup.forEach((group, i) => {
+    if (i === groupIndex || !chk.checked()) {
+      group.forEach((p) => circle(p.x, p.y, pointSize));
+    }
+  });
 
   volumeList.forEach((v) => {
     v.fillColor = COLOR_DEFAULT;
