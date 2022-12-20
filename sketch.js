@@ -1,3 +1,10 @@
+// Dupla
+// Guilherme Alfaia Caetano - 493695
+// Carlos Magno Dantas de Figueirêdo Belém - 495914
+
+// Link para testar: https://editor.p5js.org/guilhermealfaiagui1/full/rKLemqNSl
+// Obs: O teste de interseção (Volume x ponto) pode ser feito colocando o mouse em cima
+
 // Índice do grupo de pontos em modificação
 var groupIndex = 0;
 // Grupos de pontos
